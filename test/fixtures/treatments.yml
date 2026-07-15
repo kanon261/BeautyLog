@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category: 1
+  treatment_date: 2026-07-15
+  next_due_date: 2026-07-15
+  price: 1
+  memo: MyText
+  salon: one
+
+two:
+  category: 1
+  treatment_date: 2026-07-15
+  next_due_date: 2026-07-15
+  price: 1
+  memo: MyText
+  salon: two
