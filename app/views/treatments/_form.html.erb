@@ -2,7 +2,6 @@
   <% if treatment.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(treatment.errors.count, "error") %> prohibited this treatment from being saved:</h2>
-
       <ul>
         <% treatment.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,37 +9,37 @@
       </ul>
     </div>
   <% end %>
-
   <div>
     <%= form.label :category, style: "display: block" %>
-    <%= form.number_field :category %>
+    <%= form.select :category, Treatment.categories.keys %>
   </div>
-
   <div>
     <%= form.label :treatment_date, style: "display: block" %>
     <%= form.date_field :treatment_date %>
   </div>
-
   <div>
     <%= form.label :next_due_date, style: "display: block" %>
     <%= form.date_field :next_due_date %>
   </div>
-
   <div>
     <%= form.label :price, style: "display: block" %>
     <%= form.number_field :price %>
   </div>
-
   <div>
     <%= form.label :memo, style: "display: block" %>
     <%= form.textarea :memo %>
   </div>
-
   <div>
     <%= form.label :salon_id, style: "display: block" %>
-    <%= form.text_field :salon_id %>
+    <%= form.collection_select :salon_id, Salon.all, :id, :name %>
   </div>
-
+  <div>
+    <%= form.label :photo, style: "display: block" %>
+    <%= form.file_field :photo %>
+    <% if treatment.photo.attached? %>
+      <%= image_tag treatment.photo, style: "max-width: 200px; display: block; margin-top: 8px;" %>
+    <% end %>
+  </div>
   <div>
     <%= form.submit %>
   </div>

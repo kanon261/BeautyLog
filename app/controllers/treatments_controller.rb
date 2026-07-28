@@ -65,6 +65,6 @@ class TreatmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def treatment_params
-      params.expect(treatment: [ :category, :treatment_date, :next_due_date, :price, :memo, :salon_id ])
+      params.expect(treatment: [ :category, :treatment_date, :next_due_date, :price, :memo, :salon_id, :photo ])
     end
 end

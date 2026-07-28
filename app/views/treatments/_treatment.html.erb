@@ -1,32 +1,29 @@
-<div id="<%= dom_id treatment %>">
+<div id="<%= dom_id treatment %>" style="border: 1px solid #F7D9E4; border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+  <% if treatment.photo.attached? %>
+    <%= image_tag treatment.photo, style: "max-width: 150px; display: block; margin-bottom: 8px;" %>
+  <% end %>
   <div>
-    <strong>Category:</strong>
-    <%= treatment.category %>
+    <strong>カテゴリ:</strong>
+    <%= treatment.category_label %>
   </div>
-
   <div>
-    <strong>Treatment date:</strong>
+    <strong>施術日:</strong>
     <%= treatment.treatment_date %>
   </div>
-
   <div>
-    <strong>Next due date:</strong>
+    <strong>次回目安日:</strong>
     <%= treatment.next_due_date %>
   </div>
-
   <div>
-    <strong>Price:</strong>
-    <%= treatment.price %>
+    <strong>金額:</strong>
+    <%= treatment.price %>円
   </div>
-
   <div>
-    <strong>Memo:</strong>
+    <strong>メモ:</strong>
     <%= treatment.memo %>
   </div>
-
   <div>
-    <strong>Salon:</strong>
-    <%= treatment.salon_id %>
+    <strong>サロン:</strong>
+    <%= treatment.salon&.name %>
   </div>
-
 </div>
