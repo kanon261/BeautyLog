@@ -1,0 +1,23 @@
+ja:
+  activerecord:
+    errors:
+      messages:
+        blank: "を入力してください"
+        invalid: "は不正な値です"
+        greater_than: "は%{count}より大きい値にしてください"
+        not_a_number: "は数値で入力してください"
+    models:
+      treatment: "施術記録"
+      salon: "サロン"
+    attributes:
+      treatment:
+        category: "カテゴリ"
+        treatment_date: "施術日"
+        next_due_date: "次回目安日"
+        price: "金額"
+        memo: "メモ"
+        salon: "サロン"
+      salon:
+        name: "サロン名"
+        area: "エリア"
+        phone_number: "電話番号"

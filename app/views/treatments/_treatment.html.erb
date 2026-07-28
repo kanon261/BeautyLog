@@ -1,29 +1,23 @@
-<div id="<%= dom_id treatment %>" style="border: 1px solid #F7D9E4; border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+<div id="<%= dom_id treatment %>" style="border: none; border-radius: 20px; padding: 16px; margin-bottom: 16px; display: flex; gap: 14px; align-items: flex-start;">
   <% if treatment.photo.attached? %>
-    <%= image_tag treatment.photo, style: "max-width: 150px; display: block; margin-bottom: 8px;" %>
+    <%= image_tag treatment.photo, style: "width: 72px; height: 72px; object-fit: cover; border-radius: 14px; flex-shrink: 0;" %>
+  <% else %>
+    <div style="width: 72px; height: 72px; border-radius: 14px; background: #FBE1E9; flex-shrink: 0;"></div>
   <% end %>
-  <div>
-    <strong>カテゴリ:</strong>
-    <%= treatment.category_label %>
-  </div>
-  <div>
-    <strong>施術日:</strong>
-    <%= treatment.treatment_date %>
-  </div>
-  <div>
-    <strong>次回目安日:</strong>
-    <%= treatment.next_due_date %>
-  </div>
-  <div>
-    <strong>金額:</strong>
-    <%= treatment.price %>円
-  </div>
-  <div>
-    <strong>メモ:</strong>
-    <%= treatment.memo %>
-  </div>
-  <div>
-    <strong>サロン:</strong>
-    <%= treatment.salon&.name %>
+
+  <div style="flex: 1;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <strong style="font-size: 15px;"><%= treatment.category_label %> - <%= treatment.salon&.name %></strong>
+      <span style="font-size: 11px; padding: 4px 12px; border-radius: 999px; background: <%= treatment.due_status_bg_color %>; color: <%= treatment.due_status_text_color %>; font-weight: 600;">
+        <%= treatment.due_status_label %>
+      </span>
+    </div>
+    <p style="margin: 6px 0 0; font-size: 13px; color: #C98BA1;">
+      施術日 <%= treatment.treatment_date %> ・ 次回目安 <%= treatment.next_due_date %>
+    </p>
+    <p style="margin: 4px 0 0; font-size: 13px; color: #5A3A45;">
+      金額: <%= treatment.price %>円
+      <% if treatment.memo.present? %> ・ メモ: <%= treatment.memo %><% end %>
+    </p>
   </div>
 </div>

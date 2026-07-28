@@ -1,10 +1,21 @@
-<p style="color: green"><%= notice %></p>
+<p style="color: #4B8B67; font-weight: 600;"><%= notice %></p>
 
 <%= render @salon %>
 
-<div>
-  <%= link_to "Edit this salon", edit_salon_path(@salon) %> |
-  <%= link_to "Back to salons", salons_path %>
+<h2 style="margin-top: 24px;">利用履歴</h2>
+<p style="color: #B23E63; font-weight: 600;">累計利用金額: <%= @salon.treatments.sum(:price) %>円（<%= @salon.treatments.count %>件）</p>
 
-  <%= button_to "Destroy this salon", @salon, method: :delete %>
+<div>
+  <% @salon.treatments.order(treatment_date: :desc).each do |treatment| %>
+    <%= link_to treatment, style: "text-decoration: none; color: inherit;" do %>
+      <%= render treatment %>
+    <% end %>
+  <% end %>
+</div>
+
+<div style="margin-top: 16px;">
+  <%= link_to "編集する", edit_salon_path(@salon) %> |
+  <%= link_to "一覧に戻る", salons_path %>
+
+  <%= button_to "削除する", @salon, method: :delete %>
 </div>

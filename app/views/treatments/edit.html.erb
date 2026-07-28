@@ -1,12 +1,12 @@
-<% content_for :title, "Editing treatment" %>
+<% content_for :title, "施術記録の編集" %>
 
-<h1>Editing treatment</h1>
+<h1>施術記録の編集</h1>
 
 <%= render "form", treatment: @treatment %>
 
 <br>
 
 <div>
-  <%= link_to "Show this treatment", @treatment %> |
-  <%= link_to "Back to treatments", treatments_path %>
+  <%= link_to "詳細を見る", @treatment %> |
+  <%= link_to "一覧に戻る", treatments_path %>
 </div>

@@ -1,16 +1,39 @@
-<p style="color: green"><%= notice %></p>
+<p style="color: #4B8B67; font-weight: 600;"><%= notice %></p>
 
-<% content_for :title, "Treatments" %>
+<% content_for :title, "施術記録一覧" %>
 
-<h1>Treatments</h1>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+  <h1 style="margin: 0;">施術記録一覧</h1>
+  <%= link_to "＋ 新規登録", new_treatment_path, style: "background: #F2A0BE; color: #FFFFFF; padding: 10px 20px; border-radius: 999px; font-size: 14px; font-weight: 600;" %>
+</div>
 
-<div id="treatments">
-  <% @treatments.each do |treatment| %>
-    <%= render treatment %>
-    <p>
-      <%= link_to "Show this treatment", treatment %>
-    </p>
+<div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
+  <%= link_to "すべて", treatments_path, style: "padding: 6px 16px; border-radius: 999px; font-size: 13px; background: #{params[:category].blank? ? '#F2A0BE' : '#FBE1E9'}; color: #{params[:category].blank? ? '#FFFFFF' : '#B23E63'};" %>
+  <% Treatment.categories.keys.each do |cat| %>
+    <%= link_to Treatment::CATEGORY_LABELS[cat], treatments_path(category: cat), style: "padding: 6px 16px; border-radius: 999px; font-size: 13px; background: #{params[:category] == cat ? '#F2A0BE' : '#FBE1E9'}; color: #{params[:category] == cat ? '#FFFFFF' : '#B23E63'};" %>
   <% end %>
 </div>
 
-<%= link_to "New treatment", new_treatment_path %>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px;">
+  <% Treatment.categories.keys.each do |cat| %>
+    <% next_treatment = Treatment.where(category: cat).where.not(next_due_date: nil).order(:next_due_date).first %>
+    <div style="background: #FFFFFF; border-radius: 16px; padding: 14px; box-shadow: 0 4px 12px rgba(226,130,165,0.15);">
+      <p style="margin: 0; font-size: 13px; color: #C98BA1;"><%= Treatment::CATEGORY_LABELS[cat] %></p>
+      <% if next_treatment %>
+        <p style="margin: 4px 0 0; font-size: 13px; font-weight: 600; color: <%= next_treatment.due_status_text_color %>;">
+          <%= next_treatment.due_status_label %>（<%= next_treatment.next_due_date %>）
+        </p>
+      <% else %>
+        <p style="margin: 4px 0 0; font-size: 13px; color: #B0A0A8;">記録なし</p>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div id="treatments">
+  <% @treatments.sort_by { |t| t.next_due_date || Date::Infinity.new }.each do |treatment| %>
+    <%= link_to treatment, style: "text-decoration: none; color: inherit;" do %>
+      <%= render treatment %>
+    <% end %>
+  <% end %>
+</div>

@@ -19,7 +19,6 @@ class SalonsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Salon.count") do
       post salons_url, params: { salon: { area: @salon.area, name: @salon.name, phone_number: @salon.phone_number } }
     end
-
     assert_redirected_to salon_url(Salon.last)
   end
 
@@ -38,11 +37,17 @@ class SalonsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to salon_url(@salon)
   end
 
-  test "should destroy salon" do
+  test "should destroy salon without treatments" do
+    salon = Salon.create!(name: "削除用サロン", area: "テストエリア", phone_number: "00-0000-0000")
     assert_difference("Salon.count", -1) do
+      delete salon_url(salon)
+    end
+    assert_redirected_to salons_url
+  end
+
+  test "should not destroy salon with treatments" do
+    assert_no_difference("Salon.count") do
       delete salon_url(@salon)
     end
-
-    assert_redirected_to salons_url
   end
 end

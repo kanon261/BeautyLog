@@ -1,12 +1,12 @@
-<% content_for :title, "Editing salon" %>
+<% content_for :title, "サロンの編集" %>
 
-<h1>Editing salon</h1>
+<h1>サロンの編集</h1>
 
 <%= render "form", salon: @salon %>
 
 <br>
 
 <div>
-  <%= link_to "Show this salon", @salon %> |
-  <%= link_to "Back to salons", salons_path %>
+  <%= link_to "詳細を見る", @salon %> |
+  <%= link_to "一覧に戻る", salons_path %>
 </div>

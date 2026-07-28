@@ -1,10 +1,135 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+/* ===== ビューティーログ ピンクテーマ ===== */
+body {
+  background: linear-gradient(180deg, #FFF0F5 0%, #FFF8FA 100%);
+  font-family: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif;
+  color: #6B4A56;
+  padding: 24px;
+  line-height: 1.7;
+  min-height: 100vh;
+  box-sizing: border-box;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+h1, h2, h3 {
+  color: #B23E63;
+  font-weight: 700;
+}
+
+a {
+  color: #D9536F;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  color: #B23E63;
+  text-decoration: underline;
+}
+
+/* ヘッダー：シンプルな配色ベース */
+.app-header {
+  background: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(226, 130, 165, 0.15);
+  margin-bottom: 24px;
+}
+
+.app-header-overlay {
+  width: 100%;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.app-header-overlay nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.app-header-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #B23E63 !important;
+  text-decoration: none !important;
+}
+
+.app-header-overlay nav a {
+  background: #FBE1E9;
+  color: #B23E63;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.app-header-overlay nav a:hover {
+  background: #F2A0BE;
+  color: #FFFFFF;
+}
+
+/* カード（一覧の各アイテム） */
+#treatments > div, #salons > div, [id^="treatment_"], [id^="salon_"] {
+  background: #FFFFFF !important;
+  border: none !important;
+  border-radius: 20px !important;
+  box-shadow: 0 4px 14px rgba(226, 130, 165, 0.18);
+  padding: 18px !important;
+  margin-bottom: 16px !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#treatments > div:hover, #salons > div:hover, [id^="treatment_"]:hover, [id^="salon_"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(226, 130, 165, 0.25);
+}
+
+/* フォーム部品 */
+input, select, textarea {
+  border: 1px solid #F7D9E4;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 14px;
+  background: #FFFFFF;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #F2A0BE;
+  box-shadow: 0 0 0 3px rgba(242, 160, 190, 0.25);
+}
+
+input[type="submit"] {
+  background-color: #F2A0BE;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 26px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(242, 160, 190, 0.4);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #E080A2;
+  transform: translateY(-1px);
+}
+
+img {
+  border-radius: 14px;
+}

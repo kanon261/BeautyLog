@@ -1,10 +1,10 @@
-<p style="color: green"><%= notice %></p>
+<p style="color: #4B8B67; font-weight: 600;"><%= notice %></p>
 
 <%= render @treatment %>
 
-<div>
-  <%= link_to "Edit this treatment", edit_treatment_path(@treatment) %> |
-  <%= link_to "Back to treatments", treatments_path %>
+<div style="margin-top: 16px;">
+  <%= link_to "編集する", edit_treatment_path(@treatment) %> |
+  <%= link_to "一覧に戻る", treatments_path %>
 
-  <%= button_to "Destroy this treatment", @treatment, method: :delete %>
+  <%= button_to "削除する", @treatment, method: :delete %>
 </div>

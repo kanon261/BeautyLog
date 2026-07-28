@@ -11,6 +11,7 @@ class Treatment < ApplicationRecord
 
   validate :treatment_date_cannot_be_in_the_future
   validate :next_due_date_cannot_be_before_treatment_date
+  validate :photo_must_be_valid
 
   private
 
@@ -36,6 +37,19 @@ class Treatment < ApplicationRecord
     end
   end
 
+  ALLOWED_PHOTO_TYPES = %w[image/png image/jpeg image/gif image/webp].freeze
+  MAX_PHOTO_SIZE = 5.megabytes
+
+  def photo_must_be_valid
+    return unless photo.attached?
+    unless ALLOWED_PHOTO_TYPES.include?(photo.content_type)
+      errors.add(:photo, "はPNG・JPEG・GIF・WEBP形式のみアップロードできます")
+    end
+    if photo.byte_size > MAX_PHOTO_SIZE
+      errors.add(:photo, "は5MB以下のファイルにしてください")
+    end
+  end
+
   public
 
   CATEGORY_LABELS = {
@@ -47,5 +61,48 @@ class Treatment < ApplicationRecord
 
   def category_label
     CATEGORY_LABELS[category]
+  end
+
+  def days_until_due
+    return nil if next_due_date.blank?
+    (next_due_date - Date.today).to_i
+  end
+
+  def due_status
+    return :unknown if next_due_date.blank?
+    days = days_until_due
+    if days < 0
+      :overdue
+    elsif days <= 7
+      :soon
+    else
+      :ok
+    end
+  end
+
+  DUE_STATUS_LABELS = {
+    overdue: "期限切れ",
+    soon: "まもなく",
+    ok: "余裕あり",
+    unknown: "ー"
+  }.freeze
+
+  DUE_STATUS_COLORS = {
+    overdue: ["#FBE1E9", "#B23E63"],
+    soon: ["#FCEFDD", "#B77C1E"],
+    ok: ["#E7F5EB", "#4B8B67"],
+    unknown: ["#F0F0F0", "#888888"]
+  }.freeze
+
+  def due_status_label
+    DUE_STATUS_LABELS[due_status]
+  end
+
+  def due_status_bg_color
+    DUE_STATUS_COLORS[due_status][0]
+  end
+
+  def due_status_text_color
+    DUE_STATUS_COLORS[due_status][1]
   end
 end

@@ -1,0 +1,37 @@
+<% content_for :title, "ダッシュボード" %>
+
+<h1 style="color: #B23E63;">そろそろ期限のお手入れ</h1>
+
+<% upcoming = Treatment.where.not(next_due_date: nil).order(:next_due_date).select { |t| t.due_status == :overdue || t.due_status == :soon } %>
+
+<% if upcoming.any? %>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px;">
+    <% upcoming.each do |treatment| %>
+      <%= link_to treatment, style: "text-decoration: none; color: inherit;" do %>
+        <div style="background: #FFFFFF; border-radius: 18px; padding: 16px; box-shadow: 0 4px 12px rgba(226,130,165,0.15); text-align: center;">
+          <p style="margin: 0; font-size: 14px; font-weight: 600; color: #5A3A45;"><%= treatment.category_label %></p>
+          <p style="margin: 6px 0 0; font-size: 13px; color: #C98BA1;"><%= treatment.salon&.name %></p>
+          <p style="margin: 6px 0 0; font-size: 13px; font-weight: 600; color: <%= treatment.due_status_text_color %>;">
+            <%= treatment.due_status_label %>（<%= treatment.next_due_date %>）
+          </p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <p style="color: #B0A0A8; margin-bottom: 24px;">現在、期限が近いお手入れはありません。</p>
+<% end %>
+
+<h2 style="color: #B23E63;">施術記録一覧</h2>
+
+<div id="treatments">
+  <% @upcoming_treatments.each do |treatment| %>
+    <%= link_to treatment, style: "text-decoration: none; color: inherit;" do %>
+      <%= render treatment %>
+    <% end %>
+  <% end %>
+</div>
+
+<div style="text-align: right; margin-top: 16px;">
+  <%= link_to "＋ 新規登録", new_treatment_path, style: "background: #F2A0BE; color: #FFFFFF; padding: 12px 26px; border-radius: 999px; font-size: 14px; font-weight: 700; box-shadow: 0 4px 12px rgba(242,160,190,0.4);" %>
+</div>

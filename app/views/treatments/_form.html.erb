@@ -1,7 +1,7 @@
 <%= form_with(model: treatment) do |form| %>
   <% if treatment.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(treatment.errors.count, "error") %> prohibited this treatment from being saved:</h2>
+    <div style="color: #D9536F; background: #FFF0F4; border-radius: 12px; padding: 12px 16px;">
+      <h2 style="margin-top: 0;"><%= pluralize(treatment.errors.count, "件") %>のエラーがあります:</h2>
       <ul>
         <% treatment.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,37 +10,40 @@
     </div>
   <% end %>
   <div>
-    <%= form.label :category, style: "display: block" %>
-    <%= form.select :category, Treatment.categories.keys %>
+    <%= form.label :category, "カテゴリ", style: "display: block" %>
+    <%= form.select :category, Treatment::CATEGORY_LABELS.map { |key, label| [label, key] } %>
   </div>
   <div>
-    <%= form.label :treatment_date, style: "display: block" %>
+    <%= form.label :treatment_date, "施術日", style: "display: block" %>
     <%= form.date_field :treatment_date %>
   </div>
   <div>
-    <%= form.label :next_due_date, style: "display: block" %>
+    <%= form.label :next_due_date, "次回目安日（空欄で自動計算）", style: "display: block" %>
     <%= form.date_field :next_due_date %>
   </div>
   <div>
-    <%= form.label :price, style: "display: block" %>
+    <%= form.label :price, "金額", style: "display: block" %>
     <%= form.number_field :price %>
   </div>
   <div>
-    <%= form.label :memo, style: "display: block" %>
+    <%= form.label :memo, "メモ", style: "display: block" %>
     <%= form.textarea :memo %>
   </div>
   <div>
-    <%= form.label :salon_id, style: "display: block" %>
+    <%= form.label :salon_id, "サロン", style: "display: block" %>
     <%= form.collection_select :salon_id, Salon.all, :id, :name %>
   </div>
   <div>
-    <%= form.label :photo, style: "display: block" %>
-    <%= form.file_field :photo %>
-    <% if treatment.photo.attached? %>
-      <%= image_tag treatment.photo, style: "max-width: 200px; display: block; margin-top: 8px;" %>
-    <% end %>
+    <%= form.label :photo, "仕上がり写真", style: "display: block" %>
+    <div style="border: 2px dashed #F7B8CE; background: #FFF5F8; border-radius: 16px; padding: 20px; text-align: center;">
+      <%= form.file_field :photo %>
+      <p style="margin: 8px 0 0; font-size: 12px; color: #C98BA1;">写真をアップロード（PNG・JPEG・GIF・WEBP／5MBまで）</p>
+      <% if treatment.photo.attached? %>
+        <%= image_tag treatment.photo, style: "max-width: 200px; display: block; margin: 12px auto 0; border-radius: 14px;" %>
+      <% end %>
+    </div>
   </div>
   <div>
-    <%= form.submit %>
+    <%= form.submit "保存する" %>
   </div>
 <% end %>

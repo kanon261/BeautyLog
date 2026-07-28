@@ -4,6 +4,9 @@ class TreatmentsController < ApplicationController
   # GET /treatments or /treatments.json
   def index
     @treatments = Treatment.all
+    if params[:category].present? && Treatment.categories.key?(params[:category])
+      @treatments = @treatments.where(category: params[:category])
+    end
   end
 
   # GET /treatments/1 or /treatments/1.json

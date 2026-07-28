@@ -22,7 +22,6 @@ class SalonsController < ApplicationController
   # POST /salons or /salons.json
   def create
     @salon = Salon.new(salon_params)
-
     respond_to do |format|
       if @salon.save
         format.html { redirect_to @salon, notice: "Salon was successfully created." }
@@ -49,11 +48,14 @@ class SalonsController < ApplicationController
 
   # DELETE /salons/1 or /salons/1.json
   def destroy
-    @salon.destroy!
-
     respond_to do |format|
-      format.html { redirect_to salons_path, notice: "Salon was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
+      if @salon.destroy
+        format.html { redirect_to salons_path, notice: "サロンを削除しました。", status: :see_other }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to salons_path, alert: "このサロンには施術記録が紐づいているため削除できません。", status: :see_other }
+        format.json { render json: @salon.errors, status: :unprocessable_content }
+      end
     end
   end
 
